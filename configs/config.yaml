@@ -1,0 +1,44 @@
+﻿seed: 42
+
+data:
+  name: FashionMNIST
+  root: ./data
+  download: true
+  num_workers: 0
+  pin_memory: false
+  batch_size: 64
+  mean: 0.2860
+  std: 0.3530
+
+model:
+  name: CNN
+  input_channels: 1
+  num_classes: 10
+  conv1_channels: 16
+  conv2_channels: 32
+
+training:
+  epochs: 10
+  learning_rate: 0.001
+  optimizer: Adam
+  momentum: 0.9
+  weight_decay: 0.0
+  scheduler: none
+  accumulation_steps: 1
+
+checkpoint:
+  directory: ./checkpoints
+  save_every_epoch: true
+  resume: false
+  resume_path: null
+
+tracking:
+  experiment_name: Lab6-FashionMNIST
+  tracking_uri: "./mlruns"
+  log_artifacts: true
+
+output:
+  results_dir: ./results
+  device: cpu
+
+

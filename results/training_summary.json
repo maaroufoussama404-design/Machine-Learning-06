@@ -1,0 +1,5 @@
+{
+  "best_test_accuracy": 0.9095,
+  "completed_epochs": 10,
+  "device": "cpu"
+}

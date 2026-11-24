@@ -1,0 +1,6 @@
+operation,time_seconds,percentage
+data_loading,32.137,70.57
+forward,5.5622,12.21
+backward,6.1141,13.43
+optimizer,1.7271,3.79
+total,45.5405,100.0
