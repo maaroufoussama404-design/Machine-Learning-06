@@ -1,49 +1,30 @@
-﻿# Task 6 – Gradient Accumulation Analysis
+# Task 6 – Gradient Accumulation Experiment
 
-## Objective
-Understand how gradient accumulation can simulate a larger effective batch size.
+## Configurations
+- Baseline: physical batch size 256, accumulation steps 1.
+- Accumulation: physical batch size 64, accumulation steps 4.
+- Effective batch size: 256 for both.
+- Epochs: 5 per configuration.
+- Optimizer: Adam, learning rate 0.001.
+- Dataset: FashionMNIST.
+- Device: CPU.
+- Random seed: 42.
 
-## Configuration requested
-- Reference batch size: 256
-- Micro-batch size: 64
-- Accumulation steps: 4
-- Effective batch size: 64 x 4 = 256
+## Measured results
 
-## Expected behaviour
-Gradient accumulation calculates gradients over several smaller micro-batches before performing one optimizer update. This reduces the memory required for each forward and backward pass while approximating training with a larger batch.
+| Metric | Batch 256 | Batch 64, accumulation 4 |
+|---|---:|---:|
+| Final test accuracy | 0.8888 | 0.8890 |
+| Training time (seconds) | 109.12 | 108.38 |
 
-For equivalent data ordering, initialization, and loss scaling, accumulated gradients should approximate the gradients from a batch of 256 samples. Small numerical differences may occur.
+Maximum absolute parameter difference after training: 0.0187196657
 
-## Limitation
-The reference and accumulation configurations were not executed or compared. Therefore, equivalent accuracy and parameter updates have not been experimentally verified.
+Absolute final accuracy difference: 0.000200
 
-## Conclusion
-Gradient accumulation is a useful technique when memory limitations prevent training with a large physical batch size. A controlled experiment is required to confirm equivalence for this model.
+## Interpretation
+Both configurations use an effective batch size of 256. Gradient accumulation processes four micro-batches before performing an optimizer update. Gradients are weighted by the number of samples, including the final incomplete batch.
 
----
-
-# Task 7 – Training Interruption and Checkpoint Recovery
-
-## Objective
-Demonstrate the ability to recover training after an interruption.
-
-## Intended procedure
-1. Start training from the initial model.
-2. Stop after epoch 3.
-3. Save the latest checkpoint.
-4. Resume training from the saved checkpoint.
-5. Continue until epoch 10.
-6. Compare the resumed training history with uninterrupted training.
-
-## Checkpoint information
-The training pipeline implements checkpoint saving and loading. Checkpoints include model weights, optimizer state, scheduler state, epoch information, training history, and random-number generator states.
-
-## Expected behaviour
-Resuming from a checkpoint should continue training from the saved epoch rather than restarting from scratch. Training and validation metrics should continue from the previous history.
-
-## Limitation
-The interruption-and-resume procedure was not executed as a separate experiment. Therefore, successful recovery and continuity of the learning curves have not been experimentally demonstrated.
+Small numerical differences may occur because of floating-point computation and CPU execution.
 
 ## Conclusion
-Checkpointing is essential for reliable and reproducible training pipelines, particularly when training may be interrupted.
-
+The experiment compares physical batch size 256 with four accumulated micro-batches of 64 over the same five-epoch budget. See gradient_accumulation_comparison.csv for the epoch-by-epoch measurements.

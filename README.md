@@ -46,3 +46,12 @@ python train.py --config configs/config.yaml
 ## Project Proposal
 
 See `proposal.md`.
+
+## Additional completed experiments
+
+- **Task 6:** Compared batch size 256 against batch size 64 with four gradient accumulation steps, using five epochs for each configuration. Results are in `results/gradient_accumulation_comparison.csv`.
+- **Task 7:** Demonstrated checkpoint recovery by training through epoch 3 and resuming from epoch 4 through epoch 10. Results are in `results/checkpoint_resume_analysis.md`.
+
+## Remaining experimental limitations
+
+Tasks 4 and 5 are documented as theoretical analyses rather than executed benchmarks. Their reports explicitly state this limitation.
